@@ -23,11 +23,73 @@ THE SOFTWARE.
 -->
 
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:x="jelly:xml" xmlns:f="/lib/form">
     <f:entry title="${%Password}:">
-      <input class="jenkins-input" name="user.password" type="password" value="${instance.protectedPassword}" />
+        <input id="password" class="jenkins-input" name="user.password" type="password" value="${instance.protectedPassword}" />
+        <span id="passwordHint" style="color:red;"></span>
     </f:entry>
     <f:entry title="${%Confirm Password}:">
-      <input class="jenkins-input" name="user.password2" type="password" value="${instance.protectedPassword}" />
+        <input id="password2" class="jenkins-input" name="user.password2" type="password" value="${instance.protectedPassword}" />
+        <span id="confirmPasswordHint" style="color:red;"></span>
     </f:entry>
+
+    <script type="text/javascript">
+        // <![CDATA[
+        document.getElementById('password').addEventListener('input', function() {
+            var password = this.value;
+            var hintElement = document.getElementById('passwordHint');
+            var result = checkPasswordStrength(password);
+            if (result) {
+                hintElement.textContent = result;
+                hintElement.style.display = 'inline';
+            } else {
+                hintElement.textContent = '';
+                hintElement.style.display = 'none';
+            }
+        });
+
+        function checkPasswordStrength(password) {
+            // Check password length
+            if (password.length < 8) {
+                return "Password must be at least 8 characters long";
+            }
+
+            // Check for at least one uppercase letter
+            if (!/[A-Z]/.test(password)) {
+                return "Password must contain at least one uppercase letter";
+            }
+
+            // Check for at least one lowercase letter
+            if (!/[a-z]/.test(password)) {
+                return "Password must contain at least one lowercase letter";
+            }
+
+            // Check for at least one digit
+            if (!/\d/.test(password)) {
+                return "Password must contain at least one digit";
+            }
+
+            // Check for at least one special character (common set)
+            if (!/[!@#$%^&*()\-_=+$${}|;:',.<>?/\\]/.test(password)) {
+                return "Password must contain at least one special character (e.g., !@#$%^&*()-_=+[]{}|;:'\",.<>?/)";
+            }
+
+            // Password meets all criteria
+            return null; // Password is valid
+        }
+
+        document.getElementById('password2').addEventListener('input', function() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = this.value;
+            var hintElement = document.getElementById('confirmPasswordHint');
+            if (password !== confirmPassword) {
+                hintElement.textContent = "Please confirm the password by typing it twice";
+                hintElement.style.display = 'inline';
+            } else {
+                hintElement.textContent = '';
+                hintElement.style.display = 'none';
+            }
+        });
+        // ]]>
+    </script>
 </j:jelly>

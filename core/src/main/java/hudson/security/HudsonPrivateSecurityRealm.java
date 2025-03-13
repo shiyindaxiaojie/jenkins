@@ -816,6 +816,31 @@ public class HudsonPrivateSecurityRealm extends AbstractPasswordBasedSecurityRea
                     throw new FormException("Please confirm the password by typing it twice", "user.password2");
                 }
 
+                // Validate password complexity
+                if (pwd.length() < 8) {
+                    throw new FormException("Password must be at least 8 characters long", "user.password");
+                }
+
+                // Check if it contains at least one lowercase letter
+                if (!pwd.matches(".*[a-z].*")) {
+                    throw new FormException("Password must contain at least one lowercase letter", "user.password");
+                }
+
+                // Check if it contains at least one uppercase letter
+                if (!pwd.matches(".*[A-Z].*")) {
+                    throw new FormException("Password must contain at least one uppercase letter", "user.password");
+                }
+
+                // Check if it contains at least one digit
+                if (!pwd.matches(".*[0-9].*")) {
+                    throw new FormException("Password must contain at least one digit", "user.password");
+                }
+
+                // Check if it contains at least one special character (common set)
+                if (!pwd.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+                    throw new FormException("Password must contain at least one special character (e.g., !@#$%^&*()-_=+[]{}|;:'\",.<>?/)", "user.password");
+                }
+
                 if (data != null) {
                     String prefix = Stapler.getCurrentRequest().getSession().getId() + ':';
                     if (data.startsWith(prefix)) {
