@@ -89,6 +89,7 @@ ENV JENKINS_VERSION ${JENKINS_VERSION:-2.356}
 #  && echo "${JENKINS_SHA}  /usr/share/jenkins/jenkins.war" >/tmp/jenkins_sha \
 #  && sha256sum -c --strict /tmp/jenkins_sha \
 #  && rm -f /tmp/jenkins_sha
+COPY war/target/jenkins.war /usr/share/jenkins/jenkins.war
 
 ENV JENKINS_UC https://updates.jenkins.io
 ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
