@@ -11,7 +11,9 @@ RUN jlink \
 
 FROM centos:centos7.9.2009
 
-RUN yum install -y \
+RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf && \
+    echo 'nameserver 8.8.4.4' >> /etc/resolv.conf && \
+    yum install -y \
     curl \
     fontconfig \
     freetype \
