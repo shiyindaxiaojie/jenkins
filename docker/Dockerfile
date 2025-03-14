@@ -11,9 +11,11 @@ RUN jlink \
 
 FROM centos:centos7.9.2009
 
-RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf && \
-    echo 'nameserver 8.8.4.4' >> /etc/resolv.conf && \
-    yum install -y \
+RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+         -e 's|^#baseurl=http://mirror.centos.org|baseurl=https://mirrors.aliyun.com|g' \
+         -i.bak /etc/yum.repos.d/CentOS-Base.repo \
+
+RUN yum install -y \
     curl \
     fontconfig \
     freetype \
