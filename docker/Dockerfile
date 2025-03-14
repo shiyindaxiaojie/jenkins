@@ -12,8 +12,8 @@ RUN jlink \
 FROM centos:centos7.9.2009
 
 RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-         -e 's|^#baseurl=http://mirror.centos.org|baseurl=https://mirrors.aliyun.com|g' \
-         -i.bak /etc/yum.repos.d/CentOS-Base.repo \
+        -e 's|^#baseurl=http://mirror.centos.org|baseurl=https://mirrors.aliyun.com|g' \
+        -i.bak /etc/yum.repos.d/CentOS-Base.repo
 
 RUN yum install -y \
     curl \
