@@ -120,7 +120,7 @@ COPY ../jenkins-support /usr/local/bin/jenkins-support
 COPY ../jenkins.sh /usr/local/bin/jenkins.sh
 COPY ../jenkins-plugin-cli.sh /bin/jenkins-plugin-cli
 
-RUN chmod +x /usr/local/bin/jenkins-suppor \
+RUN chmod +x /usr/local/bin/jenkins-support \
     && chmod +x /usr/local/bin/jenkins.sh \
     && chmod +x /bin/jenkins-plugin-cli
 
